@@ -1,10 +1,16 @@
 package com.devchuk.root.afar;
 
 import android.app.Activity;
+import android.app.PendingIntent;
+import android.content.Intent;
 import android.os.Bundle;
+import android.telephony.SmsManager;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.Toast;
 
 
 public class MainActivity extends Activity {
@@ -36,6 +42,32 @@ public class MainActivity extends Activity {
     }
 
     public void send(View v) {
-        //hurrdurr
+        Button button = (Button) v;
+        button.setText("SENT");
+        EditText edittext = (EditText) findViewById(R.id.editText);
+        String details = edittext.getText().toString();
+
+        String phoneNo = "3476955532";
+
+        try {
+            SmsManager smsManager = SmsManager.getDefault();
+            PendingIntent sentPI;
+            String SENT = "SMS_SENT";
+
+            sentPI = PendingIntent.getBroadcast(this, 0,new Intent(SENT), 0);
+
+
+
+
+            smsManager.sendTextMessage(phoneNo, null, details, sentPI, null);
+            Toast.makeText(getApplicationContext(), "SMS sent. " + sentPI.toString(),
+            Toast.LENGTH_LONG).show();
+        } catch (Exception e) {
+            //error lol
+            Toast.makeText(getApplicationContext(),
+                    e.toString(),
+                    Toast.LENGTH_LONG).show();
+            e.printStackTrace();
+        }
     }
 }

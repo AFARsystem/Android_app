@@ -65,6 +65,7 @@
         android:background="#ffde3230"
         android:textColor="#ffffffff"
         android:textStyle="bold"
-        android:textSize="40dp" />
+        android:textSize="40dp"
+        android:onClick="send" />
 
 </RelativeLayout>
