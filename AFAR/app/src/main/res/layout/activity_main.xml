@@ -24,7 +24,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="Call for Help"
+        android:text="CALL FOR HELP"
         android:id="@+id/textView"
         android:layout_alignRight="@+id/imageView"
         android:layout_alignParentRight="true"
@@ -47,13 +47,13 @@
         android:height="300dp"
         android:maxHeight="300dp"
         android:background="#ffffffff"
-        android:hint="Details"
+        android:hint="DETAILS"
         android:gravity="left|top" />
 
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Send"
+        android:text="SEND"
         android:id="@+id/button"
         android:layout_below="@+id/editText"
         android:layout_marginTop="31dp"
