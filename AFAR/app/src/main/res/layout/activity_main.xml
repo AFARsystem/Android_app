@@ -9,4 +9,33 @@
     tools:context=".MainActivity"
     android:background="#ffdfdfdf">
 
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/imageView"
+        android:src="@drawable/help"
+        android:layout_marginRight="297dp"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="Call for Help"
+        android:id="@+id/textView"
+        android:layout_alignRight="@+id/imageView"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentTop="true"
+        />
+
+    <!--android:layout_marginLeft="208dp"
+    android:layout_marginStart="30dp"
+    android:layout_alignBottom="@+id/imageView"
+    android:layout_alignParentLeft="true"
+    android:layout_alignParentStart="true"
+    android:layout_marginBottom="10dp"-->
+
 </RelativeLayout>

@@ -4,5 +4,6 @@
     <string name="app_name">AFAR</string>
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
+    <string name="call_for_help">Call for Help</string>
 
 </resources>
