@@ -28,6 +28,7 @@ public class MainActivity extends Activity {
     private Boolean flag = false;
     GPSTracker gps;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -43,6 +44,8 @@ public class MainActivity extends Activity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         return super.onOptionsItemSelected(item);
+
+
     }
 
     private Boolean displayGpsStatus() {
@@ -171,5 +174,10 @@ public class MainActivity extends Activity {
             alertbox();
         }
         edittext.setText("");
+    }
+
+    public void manual(MenuItem item) {
+        Intent intent = new Intent(this, ManualActivity.class);
+        startActivity(intent);
     }
 }
