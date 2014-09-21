@@ -4,9 +4,10 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.PendingIntent;
 import android.content.ContentResolver;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.location.Address;
+import android.location.Geocoder;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.provider.Settings;
@@ -18,35 +19,31 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import java.io.IOException;
+import java.util.List;
+import java.util.Locale;
 
 public class MainActivity extends Activity {
 
-    private LocationManager locationManager = null;
     private Boolean flag = false;
+    //Button btnShowLocation;
+    GPSTracker gps;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.main, menu);
         return true;
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        /*int id = item.getItemId();
-        if (id == R.id.action_settings) {
-            return true;
-        }*/
         return super.onOptionsItemSelected(item);
     }
 
@@ -68,18 +65,20 @@ public class MainActivity extends Activity {
 
 
     //create alertbox
-    protected void alertbox(String title, String mymessage) {
+    protected void alertbox() {
+        Button button = (Button) findViewById(R.id.button);
+        button.setText("SEND");
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setMessage("Your Device's GPS is Disable")
+        builder.setMessage("Your device's GPS is disabled")
                 .setCancelable(false)
-                .setTitle("** Gps Status **")
-                .setPositiveButton("Gps On",
+                .setTitle("GPS STATUS")
+                .setPositiveButton("Turn it on",
                         new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int id) {
                                 // finish the current activity
                                 // AlertBoxAdvance.this.finish();
                                 Intent myIntent = new Intent(
-                                        Settings.ACTION_SECURITY_SETTINGS);
+                                        Settings.ACTION_LOCATION_SOURCE_SETTINGS);
                                 startActivity(myIntent);
                                 dialog.cancel();
                             }
@@ -103,18 +102,57 @@ public class MainActivity extends Activity {
 
         String phoneNo = "3476955532";
 
-        //find location
+        // create class object
+        gps = new GPSTracker(MainActivity.this);
+        // check if GPS enabled
+        double latitude = 0.0;
+        double longitude = 0.0;
+        if(gps.canGetLocation()){
+            latitude = gps.getLatitude();
+            longitude = gps.getLongitude();
 
-        /*create the message
-        Swagmaster
-        Address:
-        City:
-        Detail:
-        Phone:
-        */
-        //send the message
+            //Toast.makeText(getApplicationContext(), "Your Location is - \nLat: " + latitude + "\nLong: " + longitude, Toast.LENGTH_LONG).show();
+        }else{
+            // can't get location
+            // GPS or Network is not enabled
+            // Ask user to enable GPS/network in settings
+            gps.showSettingsAlert();
+        }
+        String message = "swagmaster2000\n";
+        ///////
+
+        String cityName;
+        Geocoder gcd = new Geocoder(getBaseContext(), Locale.getDefault());
+        List<Address> addresses;
+        try {
+            addresses = gcd.getFromLocation(latitude,longitude, 1);
+            cityName = addresses.get(0).getLocality();
+            Address address = addresses.get(0);
+            String readablehurrdurr = String.format(
+                    "%s, %s, %s",
+                    // If there's a street address, add it
+                    address.getMaxAddressLineIndex() > 0 ?
+                            address.getAddressLine(0) : "",
+                    // Locality is usually a city
+                    address.getLocality(),
+                    // The country of the address
+                    address.getCountryName());
+            message += (readablehurrdurr  + "\n");
+            message += (cityName + "\n");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        message += details + "\n";
+        ////////
+        Toast.makeText(getApplicationContext(), message + longitude + "\n" + latitude, Toast.LENGTH_LONG).show();
+
+
+
+
+/*
 
         flag = displayGpsStatus();
+
         if (flag) {
 
             try {
@@ -125,8 +163,8 @@ public class MainActivity extends Activity {
                 sentPI = PendingIntent.getBroadcast(this, 0, new Intent(SENT), 0);
 
 
-                smsManager.sendTextMessage(phoneNo, null, details, sentPI, null);
-                Toast.makeText(getApplicationContext(), "SMS sent. " + sentPI.toString(),
+                smsManager.sendTextMessage(phoneNo, null, message, sentPI, null);
+                Toast.makeText(getApplicationContext(), "Sent. Please wait for aid.",//"SMS sent. " + sentPI.toString()
                         Toast.LENGTH_LONG).show();
             } catch (Exception e) {
                 //error lol
@@ -137,8 +175,8 @@ public class MainActivity extends Activity {
             }
         }
         else {
-            alertbox("Gps Status!!", "Your GPS is: OFF");
-        }
+            alertbox();
+        }*/
 
     }
 }

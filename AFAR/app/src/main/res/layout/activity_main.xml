@@ -11,23 +11,12 @@
     android:longClickable="false"
     android:focusableInTouchMode="false">
 
-    <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/imageView"
-        android:src="@drawable/help"
-        android:layout_marginRight="297dp"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true" />
-
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:text="CALL FOR HELP"
         android:id="@+id/textView"
-        android:layout_alignRight="@+id/imageView"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
         android:layout_alignParentTop="true"
@@ -40,8 +29,6 @@
         android:layout_height="wrap_content"
         android:text="SEND"
         android:id="@+id/button"
-        android:layout_alignLeft="@+id/imageView"
-        android:layout_alignStart="@+id/imageView"
         android:layout_alignParentLeft="true"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
@@ -59,8 +46,6 @@
         android:id="@+id/editText"
         android:layout_below="@+id/textView"
         android:layout_marginTop="40dp"
-        android:layout_alignLeft="@+id/imageView"
-        android:layout_alignStart="@+id/imageView"
         android:layout_alignRight="@+id/textView"
         android:layout_alignEnd="@+id/textView"
         android:background="#ffffffff"
@@ -69,5 +54,15 @@
         android:textSize="35dp"
         android:height="300dp"
         android:minHeight="300dp" />
+
+    <Button
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="location foo"
+        android:id="@+id/d"
+        android:layout_toLeftOf="@+id/textView"
+        android:layout_toStartOf="@+id/textView"
+        android:visibility="invisible" />
 
 </RelativeLayout>
