@@ -26,9 +26,7 @@ import java.util.Locale;
 public class MainActivity extends Activity {
 
     private Boolean flag = false;
-    //Button btnShowLocation;
     GPSTracker gps;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,8 +45,6 @@ public class MainActivity extends Activity {
         return super.onOptionsItemSelected(item);
     }
 
-
-    //displays whether GPS is on or not
     private Boolean displayGpsStatus() {
         ContentResolver contentResolver = getBaseContext()
                 .getContentResolver();
@@ -63,8 +59,6 @@ public class MainActivity extends Activity {
         }
     }
 
-
-    //create alertbox
     protected void alertbox() {
         Button button = (Button) findViewById(R.id.button);
         button.setText("SEND");
@@ -100,56 +94,55 @@ public class MainActivity extends Activity {
         EditText edittext = (EditText) findViewById(R.id.editText);
         String details = edittext.getText().toString();
 
-        String phoneNo = "3476955532";
 
-        // create class object
+        String phoneNo = "9292442978";//Insert server phone number here. 9292442978
+
         gps = new GPSTracker(MainActivity.this);
-        // check if GPS enabled
         double latitude = 0.0;
         double longitude = 0.0;
-        if(gps.canGetLocation()){
+        if (gps.canGetLocation()) {
             latitude = gps.getLatitude();
             longitude = gps.getLongitude();
-
-            //Toast.makeText(getApplicationContext(), "Your Location is - \nLat: " + latitude + "\nLong: " + longitude, Toast.LENGTH_LONG).show();
-        }else{
+        }
+        else {
             // can't get location
             // GPS or Network is not enabled
             // Ask user to enable GPS/network in settings
             gps.showSettingsAlert();
         }
         String message = "swagmaster2000\n";
-        ///////
-
         String cityName;
+        String countryName;
         Geocoder gcd = new Geocoder(getBaseContext(), Locale.getDefault());
         List<Address> addresses;
         try {
             addresses = gcd.getFromLocation(latitude,longitude, 1);
             cityName = addresses.get(0).getLocality();
+            countryName = addresses.get(0).getCountryName();
             Address address = addresses.get(0);
             String readablehurrdurr = String.format(
-                    "%s, %s, %s",
+                    "%s, %s, %s, %s",
                     // If there's a street address, add it
                     address.getMaxAddressLineIndex() > 0 ?
                             address.getAddressLine(0) : "",
                     // Locality is usually a city
                     address.getLocality(),
                     // The country of the address
-                    address.getCountryName());
+                    address.getCountryName(), address.getPostalCode()); //getPostalCode()
             message += (readablehurrdurr  + "\n");
+            message += (countryName + "\n");
             message += (cityName + "\n");
         } catch (IOException e) {
             e.printStackTrace();
         }
         message += details + "\n";
-        ////////
-        Toast.makeText(getApplicationContext(), message + longitude + "\n" + latitude, Toast.LENGTH_LONG).show();
+        //Toast.makeText(getApplicationContext(), message + longitude + "\n" + latitude, Toast.LENGTH_LONG).show();
 
-
-
-
-/*
+        if (edittext.getText().toString().equals("")) {
+            Toast.makeText(getApplicationContext(), "Please describe the emergency and your location", Toast.LENGTH_LONG).show();
+            button.setText("SEND");
+            return;
+        }
 
         flag = displayGpsStatus();
 
@@ -176,7 +169,7 @@ public class MainActivity extends Activity {
         }
         else {
             alertbox();
-        }*/
-
+        }
+        edittext.setText("");
     }
 }

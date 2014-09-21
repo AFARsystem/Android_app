@@ -55,14 +55,4 @@
         android:height="300dp"
         android:minHeight="300dp" />
 
-    <Button
-        style="?android:attr/buttonStyleSmall"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="location foo"
-        android:id="@+id/d"
-        android:layout_toLeftOf="@+id/textView"
-        android:layout_toStartOf="@+id/textView"
-        android:visibility="invisible" />
-
 </RelativeLayout>
