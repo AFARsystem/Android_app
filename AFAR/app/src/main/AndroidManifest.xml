@@ -23,9 +23,16 @@
             </intent-filter>
         </activity>
         <activity
-
             android:name=".ManualActivity"
             android:label="Manual" >
+        </activity>
+        <activity
+            android:name=".InformationActivity"
+            android:label="@string/title_activity_information"
+            android:parentActivityName=".ManualActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.devchuk.root.afar.ManualActivity" />
         </activity>
     </application>
 
